@@ -12,10 +12,16 @@ import javax.persistence.ManyToOne;
  * @author David Araya Cádiz
  */
 @ToString(callSuper = true)
-@AllArgsConstructor
-@Builder
 @Entity
 public class Departamento extends BaseModel {
+
+    @Builder
+
+    public Departamento(@NonNull Integer numero, @NonNull Integer piso) {
+        this.numero = numero;
+        this.piso = piso;
+        this.edificio = null;
+    }
 
     @NotNull
     @Getter

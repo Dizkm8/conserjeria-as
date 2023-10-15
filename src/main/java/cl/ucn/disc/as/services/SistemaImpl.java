@@ -1,5 +1,6 @@
 package cl.ucn.disc.as.services;
 
+import cl.ucn.disc.as.exceptions.SistemaException;
 import cl.ucn.disc.as.model.*;
 import io.ebean.Database;
 import lombok.AllArgsConstructor;
@@ -18,48 +19,95 @@ public class SistemaImpl implements Sistema {
 
     @Override
     public Edificio add(Edificio edificio) {
-        // Save the Edificio in the database
+        // Persistence Operations
         database.save(edificio);
+
+        // Use-Case Operations
         return edificio;
     }
 
     @Override
     public Persona add(Persona persona) {
-        return null;
+        // Persistence Operations
+        database.save(persona);
+
+        // Use-Case Operations
+        return persona;
     }
 
     @Override
     public Departamento addDepartamento(Departamento departamento, Edificio edificio) {
-        return null;
+        // Use-Case Operations
+        edificio.add(departamento);
+
+        // Persistence Operations
+        database.save(edificio);
+
+        return departamento;
     }
+
 
     @Override
     public Departamento addDepartamento(Departamento departamento, Long idEdificio) {
-        return null;
+        Edificio foundEdificio = this.findEdificioById(idEdificio);
+
+        return this.addDepartamento(departamento, foundEdificio);
     }
 
     @Override
     public Contrato realizarContrato(Persona duenio, Departamento departamento, Instant fechaPago) {
-        return null;
+        Contrato contrato = Contrato.builder()
+                .departamento(departamento)
+                .persona(duenio)
+                .fechaPago(fechaPago)
+                .build();
+        database.save(contrato);
+        return contrato;
     }
+
 
     @Override
     public Contrato realizarContrato(Long idDuenio, Long idDepartamento, Instant fechaPago) {
-        return null;
+        Departamento departamento = findDepartamentoById(idDepartamento);
+        Persona duenio = findPersonaById(idDuenio);
+        return this.realizarContrato(duenio, departamento, fechaPago);
     }
 
     @Override
     public List<Contrato> getContratos() {
-        return null;
+        //TODO: Implement offset and max rows
+//        return database.find(Contrato.class).setMaxRows(20).findList();
+        return database.find(Contrato.class).findList();
     }
 
     @Override
     public List<Persona> getPersonas() {
-        return null;
+        return database.find(Persona.class).findList();
     }
 
     @Override
     public List<Pago> getPagos(String rut) {
-        return null;
+        return database.find(Pago.class).findList();
+    }
+
+    public Edificio findEdificioById(Long idEdificio) {
+        Edificio edificio = database.find(Edificio.class, idEdificio);
+        if (edificio == null)
+            throw new SistemaException(String.format("Do not exists any Edificio with id %o", idEdificio));
+        return edificio;
+    }
+
+    public Departamento findDepartamentoById(Long idDepartamento) {
+        Departamento departamento = database.find(Departamento.class, idDepartamento);
+        if (departamento == null)
+            throw new SistemaException(String.format("Do not exists any Departamento with id %o", idDepartamento));
+        return departamento;
+    }
+
+    public Persona findPersonaById(Long idPersona) {
+        Persona persona = database.find(Persona.class, idPersona);
+        if (persona == null)
+            throw new SistemaException(String.format("Do not exists any Persona with id %o", idPersona));
+        return persona;
     }
 }

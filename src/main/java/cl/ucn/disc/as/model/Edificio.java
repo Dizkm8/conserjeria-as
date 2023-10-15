@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.ToString;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -35,11 +36,11 @@ public class Edificio extends BaseModel {
     @Getter
     private String direccion;
 
-    @OneToMany(mappedBy = "edificio")
+    @OneToMany(mappedBy = "edificio", cascade = CascadeType.ALL) // Add cascade attribute
     @Getter
     private List<Departamento> departamentos;
 
-    public void add(@org.jetbrains.annotations.NotNull Departamento departamento) {
+    public void add(@NonNull Departamento departamento) {
         this.departamentos.add(departamento);
     }
 

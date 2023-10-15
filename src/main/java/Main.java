@@ -1,3 +1,4 @@
+import cl.ucn.disc.as.model.Departamento;
 import cl.ucn.disc.as.model.Edificio;
 import cl.ucn.disc.as.services.Sistema;
 import cl.ucn.disc.as.services.SistemaImpl;
@@ -16,11 +17,24 @@ public class Main {
 
 
         Edificio edificio = Edificio.builder()
-                .nombre("Edificio 1")
-                .direccion("Dirección 1")
+                .nombre("EDIFICIO")
+                .direccion("DIR1")
                 .build();
 
         Edificio createdEdificio = sistema.add(edificio);
-        log.debug("Edificio Created ${}", createdEdificio);
+
+        Departamento departamento = Departamento.builder()
+                .numero(2)
+                .piso(2)
+                .build();
+
+        Departamento departamento2 = Departamento.builder()
+                .numero(4)
+                .piso(4)
+                .build();
+
+        Departamento dpto = sistema.addDepartamento(departamento, edificio);
+        log.debug("Departamento Created ${}", dpto);
+        sistema.addDepartamento(departamento2, createdEdificio.getId());
     }
 }
