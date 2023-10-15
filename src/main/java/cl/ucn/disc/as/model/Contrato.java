@@ -1,6 +1,5 @@
 package cl.ucn.disc.as.model;
 
-import cl.ucn.disc.as.exceptions.IllegalDomainException;
 import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.Entity;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @ToString(callSuper = true)
 @AllArgsConstructor
@@ -16,13 +17,13 @@ import java.time.Instant;
 @Entity
 public class Contrato extends BaseModel {
 
-    public Contrato(Instant fechaPago, Persona persona, Departamento departamento) {
-        if (fechaPago == null) throw new IllegalDomainException("fechaPago cannot be null");
-        if (persona == null) throw new IllegalDomainException("persona cannot be null");
-        if (departamento == null) throw new IllegalDomainException("departamento cannot be null");
+    public Contrato(@org.jetbrains.annotations.NotNull Instant fechaPago,
+                    @org.jetbrains.annotations.NotNull Persona persona,
+                    @org.jetbrains.annotations.NotNull Departamento departamento) {
         this.fechaPago = fechaPago;
         this.persona = persona;
         this.departamento = departamento;
+        this.pagos = new ArrayList<>();
     }
 
     @NotNull
@@ -39,5 +40,5 @@ public class Contrato extends BaseModel {
 
     @NotNull
     @Getter
-    private Pago pagos;
+    private List<Pago> pagos;
 }
