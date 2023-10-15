@@ -82,29 +82,31 @@ public class SistemaImpl implements Sistema {
 
     @Override
     public List<Persona> getPersonas() {
+        //TODO: Implement offset and max rows
         return database.find(Persona.class).findList();
     }
 
     @Override
     public List<Pago> getPagos(String rut) {
+        //TODO: Implement offset and max rows
         return database.find(Pago.class).findList();
     }
 
-    public Edificio findEdificioById(Long idEdificio) {
+    private Edificio findEdificioById(Long idEdificio) {
         Edificio edificio = database.find(Edificio.class, idEdificio);
         if (edificio == null)
             throw new SistemaException(String.format("Do not exists any Edificio with id %o", idEdificio));
         return edificio;
     }
 
-    public Departamento findDepartamentoById(Long idDepartamento) {
+    private Departamento findDepartamentoById(Long idDepartamento) {
         Departamento departamento = database.find(Departamento.class, idDepartamento);
         if (departamento == null)
             throw new SistemaException(String.format("Do not exists any Departamento with id %o", idDepartamento));
         return departamento;
     }
 
-    public Persona findPersonaById(Long idPersona) {
+    private Persona findPersonaById(Long idPersona) {
         Persona persona = database.find(Persona.class, idPersona);
         if (persona == null)
             throw new SistemaException(String.format("Do not exists any Persona with id %o", idPersona));
