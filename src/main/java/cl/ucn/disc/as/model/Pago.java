@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import java.time.Instant;
 
 @ToString(callSuper = true)
@@ -18,8 +19,12 @@ public class Pago extends BaseModel {
     @NotNull
     @Getter
     private Instant fechaPago;
-    
+
     @NotNull
     @Getter
     private Integer monto;
+
+    @ManyToOne
+    @Getter
+    private Contrato contrato;
 }

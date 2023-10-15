@@ -3,10 +3,10 @@ package cl.ucn.disc.as.model;
 import io.ebean.annotation.NotNull;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +34,8 @@ public class Edificio extends BaseModel {
     @Getter
     private String direccion;
 
-    @NotNull
+    @OneToMany(mappedBy = "edificio")
     @Getter
-    @Setter
     private List<Departamento> departamentos;
 
     public void add(@org.jetbrains.annotations.NotNull Departamento departamento) {

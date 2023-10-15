@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,14 +33,17 @@ public class Contrato extends BaseModel {
     private Instant fechaPago;
 
     @NotNull
+    @ManyToOne
     @Getter
     private Persona persona;
 
     @NotNull
+    @ManyToOne
     @Getter
     private Departamento departamento;
 
     @NotNull
+    @OneToMany(mappedBy = "contrato")
     @Getter
     private List<Pago> pagos;
 }
