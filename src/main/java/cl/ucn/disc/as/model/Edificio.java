@@ -16,10 +16,10 @@ import java.util.List;
  * @author David Araya Cádiz
  */
 @ToString(callSuper = true)
-@Builder
 @Entity
 public class Edificio extends BaseModel {
 
+    @Builder
     public Edificio(@org.jetbrains.annotations.NotNull String nombre, @org.jetbrains.annotations.NotNull String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;

@@ -18,7 +18,9 @@ public class SistemaImpl implements Sistema {
 
     @Override
     public Edificio add(Edificio edificio) {
-        return null;
+        // Save the Edificio in the database
+        database.save(edificio);
+        return edificio;
     }
 
     @Override
