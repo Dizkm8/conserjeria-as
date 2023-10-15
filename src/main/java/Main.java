@@ -19,5 +19,8 @@ public class Main {
                 .nombre("Edificio 1")
                 .direccion("Dirección 1")
                 .build();
+
+        Edificio createdEdificio = sistema.add(edificio);
+        log.debug("Edificio Created ${}", createdEdificio);
     }
 }
