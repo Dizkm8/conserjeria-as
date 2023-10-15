@@ -1,10 +1,7 @@
 package cl.ucn.disc.as.model;
 
 import io.ebean.annotation.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -19,9 +16,9 @@ import java.util.List;
 @Entity
 public class Contrato extends BaseModel {
 
-    public Contrato(@org.jetbrains.annotations.NotNull Instant fechaPago,
-                    @org.jetbrains.annotations.NotNull Persona persona,
-                    @org.jetbrains.annotations.NotNull Departamento departamento) {
+    public Contrato(@NonNull Instant fechaPago,
+                    @NonNull Persona persona,
+                    @NonNull Departamento departamento) {
         this.fechaPago = fechaPago;
         this.persona = persona;
         this.departamento = departamento;

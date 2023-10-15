@@ -5,10 +5,7 @@
 package cl.ucn.disc.as.model;
 
 import io.ebean.annotation.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -28,10 +25,10 @@ import java.util.List;
 public class Persona extends BaseModel {
 
 
-    public Persona(@org.jetbrains.annotations.NotNull String rut,
-                   @org.jetbrains.annotations.NotNull String nombre,
-                   @org.jetbrains.annotations.NotNull String apellidos,
-                   @org.jetbrains.annotations.NotNull String email, String telefono) {
+    public Persona(@NonNull String rut,
+                   @NonNull String nombre,
+                   @NonNull String apellidos,
+                   @NonNull String email, String telefono) {
         this.rut = rut;
         this.nombre = nombre;
         this.apellidos = apellidos;
