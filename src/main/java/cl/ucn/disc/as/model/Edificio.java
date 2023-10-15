@@ -1,10 +1,13 @@
 package cl.ucn.disc.as.model;
 
-import cl.ucn.disc.as.exceptions.IllegalDomainException;
 import io.ebean.annotation.NotNull;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Entity;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,10 +16,15 @@ import java.util.List;
  * @author David Araya Cádiz
  */
 @ToString(callSuper = true)
-@AllArgsConstructor
 @Builder
 @Entity
 public class Edificio extends BaseModel {
+
+    public Edificio(@org.jetbrains.annotations.NotNull String nombre, @org.jetbrains.annotations.NotNull String direccion) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.departamentos = new ArrayList<>();
+    }
 
     @NotNull
     @Getter
@@ -31,8 +39,7 @@ public class Edificio extends BaseModel {
     @Setter
     private List<Departamento> departamentos;
 
-    public void add(Departamento departamento) {
-        if (departamento == null) throw new IllegalDomainException("Department cannot be null");
+    public void add(@org.jetbrains.annotations.NotNull Departamento departamento) {
         this.departamentos.add(departamento);
     }
 
