@@ -3,6 +3,7 @@ package cl.ucn.disc.as.model;
 import io.ebean.annotation.NotNull;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import java.util.List;
 public class Edificio extends BaseModel {
 
     @Builder
-    public Edificio(@org.jetbrains.annotations.NotNull String nombre, @org.jetbrains.annotations.NotNull String direccion) {
+    public Edificio(@NonNull String nombre, @NonNull String direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.departamentos = new ArrayList<>();
