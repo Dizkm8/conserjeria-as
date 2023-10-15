@@ -1,5 +1,6 @@
 package cl.ucn.disc.as.model;
 
+import cl.ucn.disc.as.exceptions.IllegalDomainException;
 import io.ebean.annotation.NotNull;
 import lombok.*;
 
@@ -30,8 +31,8 @@ public class Edificio extends BaseModel {
     @Setter
     private List<Departamento> departamentos;
 
-    public void add(Departamento departamento){
-        if(departamento == null) throw new IllegalArgumentException("Department cannot be null");
+    public void add(Departamento departamento) {
+        if (departamento == null) throw new IllegalDomainException("Department cannot be null");
         this.departamentos.add(departamento);
     }
 

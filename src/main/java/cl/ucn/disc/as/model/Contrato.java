@@ -1,5 +1,6 @@
 package cl.ucn.disc.as.model;
 
+import cl.ucn.disc.as.exceptions.IllegalDomainException;
 import io.ebean.annotation.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,9 +17,9 @@ import java.time.Instant;
 public class Contrato extends BaseModel {
 
     public Contrato(Instant fechaPago, Persona persona, Departamento departamento) {
-        if (fechaPago == null) throw new IllegalArgumentException("fechaPago cannot be null");
-        if (persona == null) throw new IllegalArgumentException("persona cannot be null");
-        if (departamento == null) throw new IllegalArgumentException("departamento cannot be null");
+        if (fechaPago == null) throw new IllegalDomainException("fechaPago cannot be null");
+        if (persona == null) throw new IllegalDomainException("persona cannot be null");
+        if (departamento == null) throw new IllegalDomainException("departamento cannot be null");
         this.fechaPago = fechaPago;
         this.persona = persona;
         this.departamento = departamento;
