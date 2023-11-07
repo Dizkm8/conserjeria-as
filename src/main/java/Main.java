@@ -2,6 +2,7 @@ import cl.ucn.disc.as.model.Departamento;
 import cl.ucn.disc.as.model.Edificio;
 import cl.ucn.disc.as.services.Sistema;
 import cl.ucn.disc.as.services.SistemaImpl;
+import cl.ucn.disc.as.ui.ApiRestServer;
 import cl.ucn.disc.as.ui.WebController;
 import io.ebean.DB;
 import io.ebean.Database;
@@ -15,7 +16,7 @@ public final class Main {
 
         log.debug("Starting Main...");
 
-//        ApiRestServer.start(7070, new WebController());
+        ApiRestServer.start(7070, new WebController());
 
         log.debug("Done...");
 
