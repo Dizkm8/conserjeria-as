@@ -29,10 +29,35 @@ public final class WebController implements RoutesConfigurator {
         app.get("/personas", ctx -> {
             ctx.json(this.sistema.getPersonas());
         });
-        // FIXME: Create a new endpoint to get a Persona by rut
-//        app.get("/personas/rut/:rut", ctx -> {
-//            String rut = ctx.pathParam("rut");
-//            Optional<Persona> oPersona = this.sistema.getPersonas(rut);
-//      });
+
+        app.get("/grpc/personas/rut/{rut}", ctx -> {
+            String rut = ctx.pathParam("rut");
+
+            ManagedChannel channel = ManagedChannelBuilder
+                    .forAddress("localhost", 50123)
+                    .usePlaintext()
+                    .build();
+
+            PersonaGrpcServiceGrpc.PersonaGrpcServiceBlockingStub stub =
+                    PersonaGrpcServiceGrpc.newBlockingStub(channel);
+
+            PersonaGrpcResponse response = stub.retrieve(PersonaGrpcRequest
+                    .newBuilder()
+                    .setRut(rut)
+                    .build());
+
+            PersonaGrpc personaGrpc = response.getPersona();
+
+            Optional<Persona> oPersona = Optional.of(Persona.builder()
+                    .rut(personaGrpc.getRut())
+                    .nombre(personaGrpc.getNombre())
+                    .apellidos(personaGrpc.getApellidos())
+                    .email(personaGrpc.getEmail())
+                    .telefono(personaGrpc.getTelefono())
+                    .build());
+            ctx.json(oPersona.orElseThrow(() -> new NotFoundResponse("Can't find Persona with rut: " + rut)));
+        });
+
+
     }
 }

@@ -18,6 +18,12 @@ public final class Main {
 
         ApiRestServer.start(7070, new WebController());
 
+        Server server = ServerBuilder
+                .forPort(50123)
+                .addService(new PersonaGrpcServiceImpl())
+                .build();
+        server.start();
+
         log.debug("Done...");
 
 //        Database db = DB.getDefault();
