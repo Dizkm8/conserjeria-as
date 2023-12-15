@@ -6,13 +6,39 @@ import cl.ucn.disc.as.ui.ApiRestServer;
 import cl.ucn.disc.as.ui.WebController;
 import io.ebean.DB;
 import io.ebean.Database;
+import io.grpc.Server;
+import io.grpc.ServerBuilder;
 import lombok.extern.slf4j.Slf4j;
+import io.ebean.DatabaseFactory;
+import io.ebean.config.DatabaseConfig;
+import io.ebean.datasource.DataSourceConfig;
+
+import java.io.IOException;
 
 
 @Slf4j
 public final class Main {
 
-    public static void main(String[] args) {
+    public static Database getDatabase() {
+        DatabaseConfig config = new DatabaseConfig();
+        config.setName("default");
+
+        DataSourceConfig dataSourceConfig = new DataSourceConfig();
+        dataSourceConfig.setDriver("org.mariadb.jdbc.Driver");
+        dataSourceConfig.setUsername("my-user");
+        dataSourceConfig.setPassword("ultra-secret-pwd-for-as");
+        dataSourceConfig.setUrl("jdbc:mariadb://localhost:3306/sample-db");
+
+        config.setDataSourceConfig(dataSourceConfig);
+
+        config.setDefaultServer(true);
+        config.setRegister(false);
+
+        return DatabaseFactory.create(config);
+    }
+
+    public static void main(String[] args) throws IOException {
+
 
         log.debug("Starting Main...");
 
@@ -26,29 +52,31 @@ public final class Main {
 
         log.debug("Done...");
 
-//        Database db = DB.getDefault();
-//        Sistema sistema = new SistemaImpl(db);
-//
-//
-//        Edificio edificio = Edificio.builder()
-//                .nombre("EDIFICIO")
-//                .direccion("DIR1")
-//                .build();
-//
-//        Edificio createdEdificio = sistema.add(edificio);
-//
-//        Departamento departamento = Departamento.builder()
-//                .numero(2)
-//                .piso(2)
-//                .build();
-//
-//        Departamento departamento2 = Departamento.builder()
-//                .numero(4)
-//                .piso(4)
-//                .build();
-//
-//        Departamento dpto = sistema.addDepartamento(departamento, edificio);
-//        log.debug("Departamento Created ${}", dpto);
-//        sistema.addDepartamento(departamento2, createdEdificio.getId());
+        Database db = getDatabase();
+        Sistema sistema = new SistemaImpl(db);
+
+
+        Edificio edificio = Edificio.builder()
+                .nombre("EDIFICIO")
+                .direccion("DIR1")
+                .build();
+
+        Edificio createdEdificio = sistema.add(edificio);
+
+        Departamento departamento = Departamento.builder()
+                .numero(2)
+                .piso(2)
+                .build();
+
+        Departamento departamento2 = Departamento.builder()
+                .numero(4)
+                .piso(4)
+                .build();
+
+        Departamento dpto = sistema.addDepartamento(departamento, edificio);
+        log.debug("Departamento Created ${}", dpto);
+        sistema.addDepartamento(departamento2, createdEdificio.getId());
     }
+
+
 }
